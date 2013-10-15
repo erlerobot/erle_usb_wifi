@@ -2,9 +2,7 @@ This tutorial explains how to use a USB WiFi dongle with chipset rtl8188CUS with
 
 ##1) Build the RTL8192 Driver
 
-Note: You can get the pre-patched source code here and a pre-built binary of the driver here.  These may or may not work though, so I would recommend building it yourself.
-
-* Download the Unix/Linux driver from the Realtek web site - It will be called something like RTL8192xC_USB_linux_v3.4.4_4749.20121105.zip
+* Download the Unix/Linux driver from the Realtek [website](http://www.realtek.com.tw/downloads/downloadsView.aspx?Langid=1&PNid=21&PFid=48&Level=5&Conn=4&DownTypeID=3&GetDown=false&Downloads=true) - It will be called something like RTL8192xC_USB_linux_v3.4.4_4749.20121105.zip
 * Unzip the file and then unpack the driver source which is  driver/tl8188C_8192C_usb_linux_v3.4.4_4749.20121105.tar.gz in the zip file
 
 ```
