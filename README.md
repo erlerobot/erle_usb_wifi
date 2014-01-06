@@ -91,3 +91,6 @@ network={
 
 * [http://embeddedprogrammer.blogspot.com.es/2013/01/beaglebone-using-usb-wifi-dongle-to.html](http://embeddedprogrammer.blogspot.com.es/2013/01/beaglebone-using-usb-wifi-dongle-to.html)
 * [http://bonenotes.tumblr.com/](http://bonenotes.tumblr.com/)
+
+
+[![Visit our IRC channel](https://kiwiirc.com/buttons/chat.freenode.net/erlerobot.png)](https://kiwiirc.com/client/chat.freenode.net/?nick=erlecoderf|?#erlerobot)
