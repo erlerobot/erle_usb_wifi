@@ -5,12 +5,6 @@ This tutorial explains how to use a USB WiFi dongle with chipset rtl8188CUS with
 * Download the Unix/Linux driver from the Realtek [website](http://www.realtek.com.tw/downloads/downloadsView.aspx?Langid=1&PNid=21&PFid=48&Level=5&Conn=4&DownTypeID=3&GetDown=false&Downloads=true) - It will be called something like RTL8192xC_USB_linux_v3.4.4_4749.20121105.zip
 * Unzip the file and then unpack the driver source which is  driver/tl8188C_8192C_usb_linux_v3.4.4_4749.20121105.tar.gz in the zip file
 
-```
-cp rtl8188C_8192C_usb_linux_v3.4.4_4749.20121105.tar.gz ~/
-tar xvfz rtl8188C_8192C_usb_linux_v3.4.4_4749.20121105.tar.gz
-cd rtl8188C_8192C_usb_linux_v3.4.4_4749.20121105
-```
-
 * Download this patch to add BB config and to fix building on linux 3.8 into the driver directory and apply it
 
 ```
@@ -18,19 +12,34 @@ wget https://raw.github.com/cmicali/rtl8192cu_beaglebone/master/util/rtl-8192-be
 patch -p1 < rtl-8192-beaglebone-linux-3.8.patch
 ```
 
-* Build the driver - Replace your_kernel_dir with the root of your BeagleBone 3.8 kernel source (mine is ~/projects/beaglebone_kernel/kernel) (If you wish to compile the kernel natively you'll have to modify the Makefile).
+-------
+
+*The cross-compilation was done without the patch and the driver seems to work fine.*
+
+-------
+
+* Build the driver - Modify the `Makefile` according to your host system (i cross-compiled it in a Ubuntu 12.04, 64 bits machine). The configuration I used in the `Makefile`:
 
 ```
-make KSRC=your_kernel_dir
+ifeq ($(CONFIG_PLATFORM_ERLE), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+ARCH=arm
+CROSS_COMPILE := arm-linux-gnueabihf-
+#ROSS_COMPILE := 
+KVER  := 3.8.13-bone35.2
+KSRC ?= /home/victor/Desktop/linux-dev/KERNEL
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+INSTALL_PREFIX :=
+endif
 ```
 
 ##2) Install the RTL8192 Driver
 
-* Copy the driver (8192cu.ko) to your beaglebone and then log into it: 
+* Copy the driver (8192cu.ko) to the robot and then log into it: 
 
 ```
 scp 8192cu.ko root@erlerobot:~/
-ssh rooterlerobot@
+ssh root@erlerobot
 ```
 
 * Install the driver
@@ -38,10 +47,15 @@ ssh rooterlerobot@
 ```
 mv 8192cu.ko /lib/modules/$(uname -r)
 depmod -a
-(these steps are recommended but not necessary)
 cd /etc/modules-load.d
 echo "8192cu" >rtl8192cu-vendor.conf
 ```
+
+-----
+
+*If you previously installed the rtlwifi drivers, it'll be wise to blacklist them*
+
+----
 
 * Blacklist the old rtlwifi drivers 
 ```
